@@ -39,19 +39,24 @@ function initSnakeGame() {
   const startButton = document.getElementById('game-start');
   const pauseButton = document.getElementById('game-pause');
   const restartButton = document.getElementById('game-restart');
+  const speedSelect = document.getElementById('speed-select');
   const stateLabel = document.getElementById('game-state');
   const scoreLabel = document.getElementById('game-score');
   const bestLabel = document.getElementById('game-best-score');
   const touchButtons = document.querySelectorAll('.touch-controls [data-dir]');
 
-  if (!canvas || !startButton || !pauseButton || !restartButton || !stateLabel || !scoreLabel || !bestLabel) {
+  if (!canvas || !startButton || !pauseButton || !restartButton || !speedSelect || !stateLabel || !scoreLabel || !bestLabel) {
     return;
   }
 
   const context = canvas.getContext('2d');
   const grid = { cols: 30, rows: 20 };
-  const stepMs = 120;
   const storageKey = 'tette-snake-best-score';
+  const speedMap = {
+    slow: 170,
+    normal: 120,
+    fast: 80,
+  };
 
   const state = {
     snake: [],
@@ -66,6 +71,7 @@ function initSnakeGame() {
     accumulator: 0,
     lastFrameTime: 0,
     loopId: 0,
+    stepMs: speedMap[speedSelect.value] || speedMap.normal,
   };
 
   window.__snakeGame = {
@@ -79,12 +85,14 @@ function initSnakeGame() {
       started: state.started,
       paused: state.paused,
       gameOver: state.gameOver,
+      stepMs: state.stepMs,
     }),
     startGame,
     pauseGame: togglePause,
     queueDirection,
     step,
     render,
+    setSpeed,
   };
 
   bestLabel.textContent = String(state.bestScore);
@@ -92,22 +100,15 @@ function initSnakeGame() {
   render();
   ensureLoop();
 
-  startButton.addEventListener('click', () => {
-    startGame();
-  });
-
+  startButton.addEventListener('click', () => startGame());
   pauseButton.addEventListener('click', () => {
-    if (!state.started || state.gameOver) {
-      return;
-    }
+    if (!state.started || state.gameOver) return;
     state.paused = !state.paused;
     updateStatus();
     render();
   });
-
-  restartButton.addEventListener('click', () => {
-    startGame();
-  });
+  restartButton.addEventListener('click', () => startGame());
+  speedSelect.addEventListener('change', () => setSpeed(speedSelect.value));
 
   document.addEventListener('keydown', (event) => {
     const dir = keyToDirection(event.key);
@@ -132,9 +133,7 @@ function initSnakeGame() {
   touchButtons.forEach((button) => {
     button.addEventListener('pointerdown', () => {
       const dir = keyToDirection(button.dataset.dir || '');
-      if (!dir) {
-        return;
-      }
+      if (!dir) return;
       if (!state.started || state.gameOver) {
         startGame(dir);
         return;
@@ -143,13 +142,33 @@ function initSnakeGame() {
     });
   });
 
-  canvas.addEventListener('pointerdown', () => {
+  canvas.addEventListener('pointerdown', (event) => {
     if (!state.started || state.gameOver) {
       startGame();
+      return;
+    }
+
+    const bounds = canvas.getBoundingClientRect();
+    const x = event.clientX - bounds.left;
+    const y = event.clientY - bounds.top;
+    const target = toGridPoint(x, y, bounds.width, bounds.height);
+    const head = state.snake[0];
+    const dx = target.x - head.x;
+    const dy = target.y - head.y;
+    const nextDirection = Math.abs(dx) > Math.abs(dy)
+      ? { x: Math.sign(dx), y: 0 }
+      : { x: 0, y: Math.sign(dy) };
+    if (nextDirection.x || nextDirection.y) {
+      queueDirection(nextDirection);
     }
   });
 
   window.addEventListener('resize', render);
+
+  function setSpeed(level) {
+    state.stepMs = speedMap[level] || speedMap.normal;
+    render();
+  }
 
   function startGame(initialDirection) {
     state.snake = [
@@ -172,9 +191,7 @@ function initSnakeGame() {
   }
 
   function togglePause() {
-    if (!state.started || state.gameOver) {
-      return;
-    }
+    if (!state.started || state.gameOver) return;
     state.paused = !state.paused;
     updateStatus();
     render();
@@ -182,9 +199,7 @@ function initSnakeGame() {
 
   function queueDirection(nextDirection) {
     const current = state.queuedDirection || state.direction;
-    if (isOpposite(current, nextDirection)) {
-      return;
-    }
+    if (isOpposite(current, nextDirection)) return;
     state.queuedDirection = nextDirection;
   }
 
@@ -216,9 +231,7 @@ function initSnakeGame() {
   }
 
   function step() {
-    if (!state.started || state.paused || state.gameOver) {
-      return;
-    }
+    if (!state.started || state.paused || state.gameOver) return;
 
     if (!isOpposite(state.direction, state.queuedDirection)) {
       state.direction = state.queuedDirection;
@@ -277,6 +290,13 @@ function initSnakeGame() {
     return next;
   }
 
+  function toGridPoint(x, y, width, height) {
+    return {
+      x: Math.max(0, Math.min(grid.cols - 1, Math.floor((x / width) * grid.cols))),
+      y: Math.max(0, Math.min(grid.rows - 1, Math.floor((y / height) * grid.rows))),
+    };
+  }
+
   function updateScore() {
     scoreLabel.textContent = String(state.score);
   }
@@ -298,9 +318,7 @@ function initSnakeGame() {
   }
 
   function ensureLoop() {
-    if (state.loopId) {
-      return;
-    }
+    if (state.loopId) return;
 
     const loop = (timestamp) => {
       if (!state.lastFrameTime) {
@@ -312,9 +330,9 @@ function initSnakeGame() {
 
       if (state.started && !state.paused && !state.gameOver) {
         state.accumulator += elapsed;
-        while (state.accumulator >= stepMs) {
+        while (state.accumulator >= state.stepMs) {
           step();
-          state.accumulator -= stepMs;
+          state.accumulator -= state.stepMs;
           if (state.gameOver) {
             state.accumulator = 0;
             break;
@@ -340,9 +358,7 @@ function initSnakeGame() {
       canvas.height = height;
     }
 
-    if (!context) {
-      return;
-    }
+    if (!context) return;
 
     const cellWidth = canvas.width / grid.cols;
     const cellHeight = canvas.height / grid.rows;
@@ -351,12 +367,10 @@ function initSnakeGame() {
     const offsetY = (canvas.height - cellSize * grid.rows) / 2;
 
     context.clearRect(0, 0, canvas.width, canvas.height);
-
     drawGrid(offsetX, offsetY, cellSize);
     drawFood(offsetX, offsetY, cellSize);
     drawSnake(offsetX, offsetY, cellSize);
     drawOverlay(offsetX, offsetY, cellSize);
-
     updateStatus();
   }
 
@@ -451,6 +465,7 @@ function initSnakeGame() {
     const words = text.split(' ');
     const lines = [];
     let line = '';
+
     words.forEach((word) => {
       const testLine = line ? `${line} ${word}` : word;
       if (context.measureText(testLine).width > maxWidth && line) {
@@ -460,6 +475,7 @@ function initSnakeGame() {
         line = testLine;
       }
     });
+
     if (line) {
       lines.push(line);
     }

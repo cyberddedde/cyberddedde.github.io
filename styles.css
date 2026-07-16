@@ -1,16 +1,12 @@
 :root {
   color-scheme: dark;
-  --bg: #07111f;
-  --bg-soft: #0c1a2d;
   --panel: rgba(11, 24, 42, 0.84);
-  --panel-strong: rgba(14, 31, 54, 0.94);
   --border: rgba(126, 170, 214, 0.16);
   --border-strong: rgba(126, 170, 214, 0.28);
   --text: #e6f0fb;
   --muted: #9ab0c9;
   --accent: #54d7ff;
   --accent-strong: #13a9ea;
-  --accent-soft: rgba(84, 215, 255, 0.12);
   --shadow: 0 24px 64px rgba(0, 0, 0, 0.32);
 }
 
@@ -40,7 +36,7 @@ a {
 
 button,
 input,
-textarea {
+select {
   font: inherit;
 }
 
@@ -133,7 +129,7 @@ main {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.9fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
   gap: 1.25rem;
   padding: clamp(1.5rem, 5vw, 3rem);
 }
@@ -142,6 +138,22 @@ main {
   display: grid;
   align-content: center;
   gap: 1rem;
+}
+
+.hero-media {
+  margin: 0;
+  min-height: 100%;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid var(--border-strong);
+  background: rgba(7, 18, 32, 0.64);
+}
+
+.hero-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .eyebrow {
@@ -200,48 +212,6 @@ h1 {
   box-shadow: none;
 }
 
-.hero-grid,
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.9rem;
-}
-
-.hero-grid {
-  align-content: start;
-}
-
-.mini-card,
-.info-card,
-.stat {
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: rgba(7, 18, 32, 0.64);
-}
-
-.mini-card,
-.info-card {
-  padding: 1rem;
-}
-
-.mini-card {
-  min-height: 132px;
-  display: grid;
-  align-content: space-between;
-  gap: 0.75rem;
-}
-
-.mini-label,
-.stat span {
-  color: var(--muted);
-  font-size: 0.82rem;
-}
-
-.mini-card strong,
-.stat strong {
-  font-size: 1.05rem;
-}
-
 .panel {
   margin-top: 1rem;
   padding: clamp(1.25rem, 3vw, 1.75rem);
@@ -258,17 +228,35 @@ h1 {
 }
 
 .info-grid {
+  display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
 }
 
-.info-card h3 {
+.info-card,
+.menu-card,
+.stat {
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: rgba(7, 18, 32, 0.64);
+}
+
+.info-card,
+.menu-card {
+  padding: 1rem;
+}
+
+.info-card h3,
+.menu-card h3 {
   margin-bottom: 0.5rem;
   font-size: 1.02rem;
 }
 
 .info-card p,
 .game-copy,
-.game-hint {
+.game-hint,
+.field span,
+.stat span {
   color: var(--muted);
   line-height: 1.75;
 }
@@ -277,31 +265,21 @@ h1 {
   overflow: hidden;
 }
 
-.game-shell {
+.game-layout {
   display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(280px, 2fr);
   gap: 1rem;
+  align-items: start;
 }
 
-.game-meta {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
-}
-
-.stat {
-  padding: 0.9rem 1rem;
-  display: grid;
-  gap: 0.25rem;
-}
-
-.game-board-wrap {
+.game-stage {
   display: grid;
   gap: 0.65rem;
 }
 
 #snake-canvas {
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 5 / 4;
   display: block;
   border-radius: 22px;
   border: 1px solid var(--border-strong);
@@ -313,6 +291,25 @@ h1 {
 
 .game-hint {
   font-size: 0.95rem;
+}
+
+.game-menu {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field select {
+  min-height: 46px;
+  padding: 0.75rem 0.85rem;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: rgba(9, 22, 38, 0.86);
+  color: var(--text);
 }
 
 .touch-controls {
@@ -340,7 +337,19 @@ h1 {
   transform: translateY(1px);
 }
 
+.game-stats {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.stat {
+  padding: 0.9rem 1rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
 .game-copy {
+  margin-top: 1rem;
   font-size: 0.95rem;
 }
 
@@ -349,8 +358,8 @@ h1 {
     grid-template-columns: 1fr;
   }
 
-  .game-meta {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .game-layout {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -381,12 +390,7 @@ h1 {
     padding-top: 0.75rem;
   }
 
-  .info-grid,
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .game-meta {
+  .info-grid {
     grid-template-columns: 1fr;
   }
 }

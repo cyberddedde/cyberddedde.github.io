@@ -26,14 +26,13 @@
       <a href="#experience">Experience</a>
       <a href="#research">Research</a>
       <a href="#games">Games</a>
-      <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <main id="main">
     <section id="home" class="hero card">
       <div class="hero-copy">
-        <p class="eyebrow">slither inspired / static portfolio</p>
+        <p class="eyebrow">static portfolio</p>
         <h1>떼떼의 반응형 프로페셔널 웹사이트</h1>
         <p class="lead">
           이틀째 AI 교육을 듣고 있으며, AI를 활용해 그럴싸한 웹사이트를 만들고 싶은 사람의 포트폴리오입니다.
@@ -43,24 +42,9 @@
           <a class="button button-secondary" href="#about">소개 보기</a>
         </div>
       </div>
-      <div class="hero-grid">
-        <article class="mini-card">
-          <span class="mini-label">이름</span>
-          <strong>떼떼</strong>
-        </article>
-        <article class="mini-card">
-          <span class="mini-label">연락처</span>
-          <strong>010-123-1234</strong>
-        </article>
-        <article class="mini-card">
-          <span class="mini-label">현재 목표</span>
-          <strong>정적 웹사이트와 게임 완성</strong>
-        </article>
-        <article class="mini-card">
-          <span class="mini-label">디자인 톤</span>
-          <strong>어둡고 네온빛 나는 게임식 분위기</strong>
-        </article>
-      </div>
+      <figure class="hero-media">
+        <img src="배경.jpg" alt="배경 이미지" />
+      </figure>
     </section>
 
     <section id="about" class="panel card">
@@ -70,16 +54,16 @@
       </div>
       <div class="info-grid">
         <article class="info-card">
-          <h3>소개</h3>
-          <p>AI 교육을 듣는 중이며, AI를 활용해 그럴싸한 웹사이트를 만들고 싶은 사람입니다.</p>
-        </article>
-        <article class="info-card">
           <h3>이름</h3>
           <p>떼떼</p>
         </article>
         <article class="info-card">
           <h3>연락처</h3>
           <p>010-123-1234</p>
+        </article>
+        <article class="info-card">
+          <h3>소개</h3>
+          <p>AI 교육을 듣는 중이며, AI를 활용해 그럴싸한 웹사이트를 만들고 싶은 사람입니다.</p>
         </article>
         <article class="info-card">
           <h3>참고</h3>
@@ -95,12 +79,20 @@
       </div>
       <div class="info-grid">
         <article class="info-card">
-          <h3>현재 프로젝트</h3>
-          <p>반응형 개인 프로페셔널 웹사이트와 지렁이 게임 구축.</p>
+          <h3>현재 작업</h3>
+          <p>정적 개인 프로페셔널 웹사이트와 브라우저 지렁이 게임을 함께 구성하고 있습니다.</p>
+        </article>
+        <article class="info-card">
+          <h3>확인된 범위</h3>
+          <p>반응형 화면, 게임 메뉴, 지렁이 조작, 배포 흐름은 현재 구현 대상으로 확인되었습니다.</p>
         </article>
         <article class="info-card">
           <h3>기타 프로젝트</h3>
           <p>[사람 확인 필요] CV에 구체적으로 적힌 프로젝트가 없어 추가 확인이 필요합니다.</p>
+        </article>
+        <article class="info-card">
+          <h3>작업 방식</h3>
+          <p>작게 만들고, 확인하고, 안정화하는 방식으로 진행합니다.</p>
         </article>
       </div>
     </section>
@@ -116,8 +108,16 @@
           <p>이틀째 AI 교육을 듣고 있으며, 실습 중심으로 웹사이트를 제작하는 중입니다.</p>
         </article>
         <article class="info-card">
+          <h3>실행 경험</h3>
+          <p>정적 웹사이트와 간단한 게임을 직접 연결하는 방식으로 학습 내용을 화면에 옮기고 있습니다.</p>
+        </article>
+        <article class="info-card">
           <h3>세부 경력</h3>
           <p>[사람 확인 필요] 업무 경력이나 직무 이력은 현재 제공된 자료에서 확인되지 않습니다.</p>
+        </article>
+        <article class="info-card">
+          <h3>작업 태도</h3>
+          <p>확인된 사실만 적고, 나머지는 [사람 확인 필요]로 남기는 쪽을 우선합니다.</p>
         </article>
       </div>
     </section>
@@ -125,12 +125,12 @@
     <section id="research" class="panel card">
       <div class="section-head">
         <p class="eyebrow">Research</p>
-        <h2>확인 가능한 연구/학습 주제</h2>
+        <h2>학습 주제</h2>
       </div>
       <div class="info-grid">
         <article class="info-card">
           <h3>학습 주제</h3>
-          <p>AI로 웹사이트를 만들기, 반응형 UI, 간단한 브라우저 게임 구현.</p>
+          <p>반응형 UI, 게임 루프, 입력 처리, 배포 확인 같은 실습형 주제를 다룹니다.</p>
         </article>
         <article class="info-card">
           <h3>세부 연구</h3>
@@ -144,65 +144,66 @@
         <p class="eyebrow">Games</p>
         <h2>지렁이 게임</h2>
       </div>
-      <div class="game-shell">
-        <div class="game-meta">
-          <div class="stat">
-            <span>상태</span>
-            <strong id="game-state">준비됨</strong>
+      <div class="game-layout">
+        <div class="game-stage">
+          <canvas id="snake-canvas" width="900" height="600" aria-label="지렁이 게임 보드"></canvas>
+          <div class="game-hint">
+            방향키/WASD, 화면 클릭, 모바일 버튼으로 조작할 수 있습니다.
           </div>
-          <div class="stat">
-            <span>점수</span>
-            <strong id="game-score">0</strong>
+        </div>
+
+        <aside class="game-menu" aria-label="게임 메뉴">
+          <div class="menu-card">
+            <h3>속도 조절</h3>
+            <label class="field">
+              <span>지렁이 속도</span>
+              <select id="speed-select">
+                <option value="slow">느리게</option>
+                <option value="normal" selected>보통</option>
+                <option value="fast">빠르게</option>
+              </select>
+            </label>
           </div>
-          <div class="stat">
-            <span>최고 점수</span>
-            <strong id="game-best-score">0</strong>
+
+          <div class="menu-card">
+            <h3>방향 버튼</h3>
+            <div class="touch-controls" aria-label="모바일 조작 버튼">
+              <button type="button" data-dir="up" aria-label="위쪽">▲</button>
+              <div class="touch-row">
+                <button type="button" data-dir="left" aria-label="왼쪽">◀</button>
+                <button type="button" data-dir="down" aria-label="아래쪽">▼</button>
+                <button type="button" data-dir="right" aria-label="오른쪽">▶</button>
+              </div>
+            </div>
           </div>
-          <div class="game-actions">
+
+          <div class="menu-card game-stats">
+            <div class="stat">
+              <span>상태</span>
+              <strong id="game-state">준비됨</strong>
+            </div>
+            <div class="stat">
+              <span>점수</span>
+              <strong id="game-score">0</strong>
+            </div>
+            <div class="stat">
+              <span>최고 점수</span>
+              <strong id="game-best-score">0</strong>
+            </div>
+          </div>
+
+          <div class="menu-card game-actions">
             <button class="button" id="game-start" type="button">시작</button>
             <button class="button button-secondary" id="game-pause" type="button">일시정지</button>
             <button class="button button-secondary" id="game-restart" type="button">재시작</button>
           </div>
-        </div>
-
-        <div class="game-board-wrap">
-          <canvas id="snake-canvas" width="900" height="600" aria-label="지렁이 게임 보드"></canvas>
-          <div class="game-hint">
-            방향키/WASD로 조작하고, 모바일에서는 아래 버튼을 누르세요.
-          </div>
-        </div>
-
-        <div class="touch-controls" aria-label="모바일 조작 버튼">
-          <button type="button" data-dir="up" aria-label="위쪽">▲</button>
-          <div class="touch-row">
-            <button type="button" data-dir="left" aria-label="왼쪽">◀</button>
-            <button type="button" data-dir="down" aria-label="아래쪽">▼</button>
-            <button type="button" data-dir="right" aria-label="오른쪽">▶</button>
-          </div>
-        </div>
-
-        <p class="game-copy">
-          시작, 이동, 음식, 성장, 점수, 충돌, 게임 오버, 일시정지, 재시작, 최고 점수를 지원합니다.
-          반대 방향 입력은 막히며, 중복 타이머는 생성되지 않습니다.
-        </p>
+        </aside>
       </div>
-    </section>
 
-    <section id="contact" class="panel card">
-      <div class="section-head">
-        <p class="eyebrow">Contact</p>
-        <h2>연락</h2>
-      </div>
-      <div class="info-grid">
-        <article class="info-card">
-          <h3>전화</h3>
-          <p>010-123-1234</p>
-        </article>
-        <article class="info-card">
-          <h3>메모</h3>
-          <p>[사람 확인 필요] 이메일이나 외부 링크는 제공된 자료에 없었습니다.</p>
-        </article>
-      </div>
+      <p class="game-copy">
+        시작, 이동, 음식, 성장, 점수, 충돌, 게임 오버, 일시정지, 재시작, 최고 점수를 지원합니다.
+        반대 방향 입력은 막히며, 중복 타이머는 생성되지 않습니다.
+      </p>
     </section>
   </main>
 </body>
