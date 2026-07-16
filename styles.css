@@ -1,22 +1,20 @@
 :root {
   color-scheme: dark;
-  --panel: rgba(11, 24, 42, 0.84);
+  --panel: rgba(11, 24, 42, 0.86);
   --border: rgba(126, 170, 214, 0.16);
   --border-strong: rgba(126, 170, 214, 0.28);
   --text: #e6f0fb;
   --muted: #9ab0c9;
   --accent: #54d7ff;
   --accent-strong: #13a9ea;
-  --shadow: 0 24px 64px rgba(0, 0, 0, 0.32);
+  --danger: #ff8c6a;
+  --success: #76e6a5;
+  --shadow: 0 24px 64px rgba(0, 0, 0, 0.34);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -26,7 +24,7 @@ body {
   background:
     radial-gradient(circle at top left, rgba(84, 215, 255, 0.16), transparent 22%),
     radial-gradient(circle at top right, rgba(19, 169, 234, 0.12), transparent 28%),
-    linear-gradient(180deg, #04101d 0%, #09192b 46%, #040b14 100%);
+    linear-gradient(180deg, #04101d 0%, #09192b 48%, #040b14 100%);
 }
 
 a {
@@ -36,9 +34,7 @@ a {
 
 button,
 input,
-select {
-  font: inherit;
-}
+select { font: inherit; }
 
 .skip-link {
   position: absolute;
@@ -51,9 +47,7 @@ select {
   color: #03101a;
 }
 
-.skip-link:focus {
-  left: 0.75rem;
-}
+.skip-link:focus { left: 0.75rem; }
 
 .site-header {
   position: sticky;
@@ -77,8 +71,7 @@ select {
 .brand {
   font-size: 1.05rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .brand-subtitle {
@@ -129,7 +122,7 @@ main {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
   gap: 1.25rem;
   padding: clamp(1.5rem, 5vw, 3rem);
 }
@@ -142,8 +135,8 @@ main {
 
 .hero-media {
   margin: 0;
-  min-height: 100%;
   overflow: hidden;
+  min-height: 100%;
   border-radius: 22px;
   border: 1px solid var(--border-strong);
   background: rgba(7, 18, 32, 0.64);
@@ -153,6 +146,7 @@ main {
   display: block;
   width: 100%;
   height: 100%;
+  min-height: 320px;
   object-fit: cover;
 }
 
@@ -172,9 +166,20 @@ p {
 }
 
 h1 {
-  max-width: 11ch;
-  font-size: clamp(2.3rem, 6vw, 4.9rem);
-  line-height: 0.98;
+  max-width: none;
+  white-space: nowrap;
+  font-size: clamp(1.65rem, 4.4vw, 4.1rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.game-copy,
+.game-hint,
+.section-copy,
+.field span,
+.stat span {
+  color: var(--muted);
+  line-height: 1.75;
 }
 
 .lead {
@@ -227,47 +232,13 @@ h1 {
   font-size: clamp(1.45rem, 3vw, 2rem);
 }
 
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.9rem;
-}
-
-.info-card,
-.menu-card,
-.stat {
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: rgba(7, 18, 32, 0.64);
-}
-
-.info-card,
-.menu-card {
-  padding: 1rem;
-}
-
-.info-card h3,
-.menu-card h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1.02rem;
-}
-
-.info-card p,
-.game-copy,
-.game-hint,
-.field span,
-.stat span {
-  color: var(--muted);
-  line-height: 1.75;
-}
-
-.games-panel {
+.game-panel {
   overflow: hidden;
 }
 
 .game-layout {
   display: grid;
-  grid-template-columns: minmax(0, 8fr) minmax(280px, 2fr);
+  grid-template-columns: minmax(0, 7fr) minmax(280px, 3fr);
   gap: 1rem;
   align-items: start;
 }
@@ -275,6 +246,7 @@ h1 {
 .game-stage {
   display: grid;
   gap: 0.65rem;
+  justify-items: center;
 }
 
 #snake-canvas {
@@ -289,6 +261,17 @@ h1 {
   box-shadow: inset 0 0 0 1px rgba(84, 215, 255, 0.04);
 }
 
+#tetris-canvas {
+  width: min(100%, 420px);
+  aspect-ratio: 1 / 2;
+  display: block;
+  border-radius: 22px;
+  border: 1px solid var(--border-strong);
+  background:
+    linear-gradient(180deg, rgba(15, 33, 53, 0.92), rgba(7, 17, 28, 0.96));
+  box-shadow: inset 0 0 0 1px rgba(84, 215, 255, 0.04);
+}
+
 .game-hint {
   font-size: 0.95rem;
 }
@@ -296,6 +279,22 @@ h1 {
 .game-menu {
   display: grid;
   gap: 0.9rem;
+}
+
+.menu-card,
+.stat {
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: rgba(7, 18, 32, 0.64);
+}
+
+.menu-card {
+  padding: 1rem;
+}
+
+.menu-card h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.02rem;
 }
 
 .field {
@@ -321,20 +320,36 @@ h1 {
 .touch-row {
   display: flex;
   gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.touch-controls button {
+.touch-controls button,
+.segment {
   min-width: 56px;
   min-height: 56px;
+  padding: 0.7rem 0.9rem;
   border-radius: 16px;
   border: 1px solid var(--border-strong);
   background: rgba(9, 22, 38, 0.86);
   color: var(--text);
-  font-size: 1rem;
 }
 
-.touch-controls button:active {
+.touch-controls button:active,
+.segment:active {
   transform: translateY(1px);
+}
+
+.segmented-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.segment.is-active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #04111b;
+  border-color: transparent;
 }
 
 .game-stats {
@@ -346,6 +361,65 @@ h1 {
   padding: 0.9rem 1rem;
   display: grid;
   gap: 0.25rem;
+}
+
+.stat strong {
+  font-size: 1.05rem;
+}
+
+.mine-board {
+  display: grid;
+  gap: 0.35rem;
+  aspect-ratio: 1 / 1;
+  width: min(80%, 100%);
+  justify-self: center;
+  padding: 0.5rem;
+  border-radius: 22px;
+  border: 1px solid var(--border-strong);
+  background:
+    radial-gradient(circle at center, rgba(84, 215, 255, 0.08), transparent 45%),
+    linear-gradient(180deg, #071522 0%, #08111c 100%);
+}
+
+.mine-cell {
+  min-width: 0;
+  border: 1px solid rgba(126, 170, 214, 0.18);
+  border-radius: 12px;
+  background: rgba(9, 22, 38, 0.92);
+  color: var(--text);
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+}
+
+.mine-cell.revealed {
+  background: rgba(12, 30, 49, 0.96);
+}
+
+.mine-cell.flagged {
+  color: var(--accent);
+}
+
+.mine-cell.mine {
+  background: rgba(64, 17, 26, 0.95);
+  border-color: rgba(255, 140, 106, 0.45);
+}
+
+.mine-cell.mine::after {
+  content: "✦";
+}
+
+.mine-cell[data-adjacent="1"] { color: #8fd4ff; }
+.mine-cell[data-adjacent="2"] { color: #89f2b6; }
+.mine-cell[data-adjacent="3"] { color: #ffe28b; }
+.mine-cell[data-adjacent="4"] { color: #ffbe8d; }
+.mine-cell[data-adjacent="5"] { color: #ff9d8f; }
+.mine-cell[data-adjacent="6"] { color: #e9c7ff; }
+
+.section-copy {
+  max-width: 70ch;
 }
 
 .game-copy {
@@ -360,6 +434,15 @@ h1 {
 
   .game-layout {
     grid-template-columns: 1fr;
+  }
+
+  #tetris-canvas {
+    width: min(100%, 392px);
+  }
+
+  .mine-board {
+    width: min(80%, 92%);
+    aspect-ratio: 1 / 0.95;
   }
 }
 
@@ -390,7 +473,11 @@ h1 {
     padding-top: 0.75rem;
   }
 
-  .info-grid {
+  .button {
+    width: 100%;
+  }
+
+  .segmented-controls {
     grid-template-columns: 1fr;
   }
 }
@@ -405,15 +492,22 @@ h1 {
   }
 
   h1 {
-    max-width: 12ch;
+    font-size: clamp(1.5rem, 7vw, 2.8rem);
   }
 
-  .button {
-    width: 100%;
-  }
-
-  .touch-controls button {
+  .touch-controls button,
+  .segment {
     min-width: 50px;
     min-height: 50px;
+  }
+
+  #tetris-canvas {
+    width: min(100%, 336px);
+  }
+
+  .mine-board {
+    width: min(84%, 96%);
+    gap: 0.25rem;
+    padding: 0.35rem;
   }
 }
